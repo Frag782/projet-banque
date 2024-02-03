@@ -1,24 +1,22 @@
 const express = require('express');
 const cors = require('cors');
-const { showUsers, authenticate } = require('./users');
+const config = require('./data/config.json');
+const { authenticate, register } = require('./utils/authService');
+const { fetchAccounts } = require('./utils/userService');
 
-const port = 9000;
 const app = express();
+
+/***** MIDDLEWARES *****/
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
+/***** ROUTES *****/
 app.get('/', (req, res) => {
-    res.send('Ok')
+    res.send('Ok');
 })
 
-/* Routes */
-app.post('/', (req, res) => {
-    const {username, password} = req.body;
-    console.log(req.body)
+app.post('/register', register);
+app.post('/login', authenticate);
+app.post('/user/accounts', fetchAccounts);
 
-    if (authenticate(username, password))
-        res.json({message : 'Connected', success : true})
-    else res.json({message : 'Connection failed', success : false})
-})
-
-app.listen(port, () => {console.log('Listening on port 9000...')});
+app.listen(config.port, () => console.log('Listening on port 9000...'));
