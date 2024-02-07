@@ -1,36 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-import config from '../data/config.json';
+import { useLocation, useParams } from "react-router-dom";
 
 const Home = () => {
-    useEffect( () => {
-        document.title = 'Accueil';
-        fetchAccounts();
-    }, []);
-    const apiURL = config.apiURL;
+    useEffect( () => { document.title = 'Accueil'; }, []);
     const { username } = useParams();
-    const [accounts, setAccounts] = useState([]);
-
-    const fetchAccounts = () => {
-        // appel à l'API pour récupérer les comptes pour username
-        fetch(`${apiURL}/user/accounts`, {
-            method : 'POST',
-            headers : {
-                'Content-Type' : 'application/json'
-            },
-            body : JSON.stringify({
-                username : username
-            })
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    setAccounts(data.accounts);
-                }
-            })
-    }
-
+    const { state } = useLocation();    // contient accounts - voir Login
+    const { accounts } = state;
+    
     return (
         <div>
             <nav class='navbar bg-light navbar-expand-lg'>

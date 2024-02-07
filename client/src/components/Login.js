@@ -14,7 +14,7 @@ const Login = () => {
     const login = (e) => {
         e.preventDefault();
         
-        fetch(`${apiURL}/login`, {
+        fetch(`${apiURL}/authenticate`, {
             method : 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +26,9 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(data => {
-            if (data.success) navigate(`/home/${username}`);
+            if (data.success) {
+                navigate(`/home/${username}`, { state: { accounts: data.accounts } });
+            }
             else {
                 alert(data.message);
                 loginForm.current.reset();

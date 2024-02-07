@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 
 const Register = () => {
     useEffect( () => {document.title = 'Inscription'}, []);
-    const apiURL = config.apiURL;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
@@ -23,7 +22,7 @@ const Register = () => {
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        fetch(`${apiURL}/register`, {
+        fetch(`${config.apiURL}/register`, {
             method : 'POST',
             headers : {
                 'Content-Type' : 'application/json'
