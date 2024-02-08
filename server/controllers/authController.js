@@ -17,7 +17,11 @@ exports.authenticate = async (req, res) => {
                     return res.status(500).json({ message: "Erreur lors de l'authentification.", success: false });
                 }
                 else if (success) {
-                    return res.status(200).json({ message: `Bienvenue ${username}.`, success: true });
+                    return res.status(200).json({ 
+                        message: `Bienvenue ${username}.`, 
+                        success: true,
+                        accounts: user.accounts
+                    });
                 }
                 else {
                     return res.status(401).json({ message: "Mot de passe incorrect.", success: false });

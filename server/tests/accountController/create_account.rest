@@ -1,0 +1,8 @@
+POST http://localhost:9000/account
+Content-Type: application/json
+
+{
+    "username": "frag782",
+    "accountNumber": "MARCHE PAS",
+    "balance": 2000
+}

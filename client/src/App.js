@@ -1,9 +1,10 @@
-import './App.css';
-import Home from './components/Home';
-import Login from './components/Login';
-import Register from './components/Register';
-import Notfound from './components/Notfound';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import './App.css';
+import Login from './pages/Login';
+import Notfound from './pages/NotFound.js/Notfound';
+import Register from './pages/Register';
+import Home from "./pages/Home";
 
 function App() {
   return (

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const config = require('./data/config.json');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const accountRoutes = require('./routes/accountRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 /***** ROUTES *****/
 app.use(userRoutes);
 app.use(authRoutes);
+app.use(accountRoutes);
 app.get('/', (req, res) => res.send('API is up and running...'));
 
 mongoose.connect(config.dbConnection)
