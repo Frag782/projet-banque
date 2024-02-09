@@ -1,0 +1,8 @@
+POST http://localhost:9000/account/transaction
+Content-Type: application/json
+
+{
+    "accountId": "65c4a88581ac8dab04329a49",
+    "transactionType": "deposit",
+    "amount": -10000
+}

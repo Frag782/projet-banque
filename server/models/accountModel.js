@@ -12,4 +12,14 @@ var accountSchema = new Schema({
     }
 });
 
+accountSchema.methods.withdraw = async function (amount) {
+    this.balance -= amount;
+    this.save();
+}
+
+accountSchema.methods.deposit = async function (amount) {
+    this.balance += amount;
+    this.save();
+}
+
 module.exports = mongoose.model('Account', accountSchema);

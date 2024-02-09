@@ -1,23 +1,53 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "../../components/NavigationBar";
 import Services from "./Services";
 import Accounts from "./Accounts";
+const config = require('../../data/config.json');
 
 const Home = () => {
-    useEffect( () => { document.title = 'Accueil'; }, []);
-    const { username } = useParams();
-    //const { state } = useLocation();    // contient accounts - voir Login
-    //const { accounts } = state;
-    /* JUSTE POUR TESTER */
-    const [accounts, setAccounts] = useState([{accountNumber: "C1X", balance: 100}, {accountNumber: "X22", balance: 200},
-    {accountNumber: "A13", balance: 300}, {accountNumber: "BW4", balance: 400}]);
+    const [accounts, setAccounts] = useState([]);
+    const [dataLoaded, setDataLoaded] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect( () => { 
+        document.title = 'Accueil';
+        
+        if (sessionStorage.getItem('authenticatedUser')) {
+            fetch(`${config.apiURL}/accounts/${sessionStorage.getItem('authenticatedUser')}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) alert(data.message);
+                    else {
+                        setAccounts(data.accounts);
+                        setDataLoaded(true);
+                    };
+                })
+                .catch ( error => {
+                    alert("Erreur lors de la récupération des comptes.");
+                });
+        }
+
+        else {
+            (navigate('/login'));
+        }
+    }, []);
     
     return (
         <div>
-            <NavigationBar/>
-            <Accounts accounts={accounts}/>
-            <Services/>
+            <NavigationBar />
+            { dataLoaded ? (
+                <>
+                    <Accounts accounts={accounts} />
+                    <Services />
+                </>
+            ) : (
+                <div class='text-center my-5'>
+                    <div class="spinner-border text-success" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

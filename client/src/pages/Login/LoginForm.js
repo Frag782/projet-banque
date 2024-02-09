@@ -6,7 +6,6 @@ const config = require('../../data/config.json');
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const loginForm = useRef();
     const navigate = useNavigate();
 
     const login = (e) => {
@@ -25,21 +24,21 @@ const LoginForm = () => {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                navigate(`/home/${username}`)//, 
-                //{ state: { accounts: data.accounts } });
+                sessionStorage.setItem("authenticatedUser", username);
+                navigate(`/home`);
             }
             else {
                 alert(data.message);
-                loginForm.current.reset();
+                e.target.reset();
             }
         })
         .catch ( error => {
-            console.error("Erreur lors de l'authentification", error);
+            alert("Erreur lors de l'authentification.");
         });
     }
 
     return (
-        <form ref={loginForm} class='col-4 offset-4 col-lg-2 offset-lg-5 text-center' onSubmit={login}>
+        <form class='col-4 offset-4 col-lg-2 offset-lg-5 text-center' onSubmit={login}>
             <div class='form-group mb-2'>
                 <input name='username' class='form-control' type='text' placeholder="Nom d'utilisateur" onChange={e => {setUsername(e.target.value)}} required></input>
             </div>

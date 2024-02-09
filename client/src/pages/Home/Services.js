@@ -7,17 +7,15 @@ const Services = () => {
     const accountForm = useRef();
 
     const createAccount = (e) => {
-        e.preventDefault();
-            
         fetch(`${config.apiURL}/account`, {
             method : 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body : JSON.stringify({
-                username: 'frag782',    // A REMPLACER PAR SESSIONSTORAGE
+                username: sessionStorage.getItem('authenticatedUser'),
                 accountNumber: accountNumber,
-                balance: balance
+                balance: (balance ? balance : 0)
             })
         })
         .then(res => res.json())
@@ -28,10 +26,10 @@ const Services = () => {
     }
 
     return (
-        <div class='col col-sm-4 offset-sm-4'>
+        <div class='col col-md-6 offset-md-3 my-3'>
             <h5 class='mb-3'>Mes services</h5>
             <div>
-            <form ref={accountForm} class='text-center' onSubmit={createAccount}>
+            <form ref={accountForm} class='col-6 offset-3 text-center' onSubmit={createAccount}>
                 <div class='form-group mb-2'>
                     <input name='accountNumber' class='form-control' type='text' placeholder="Numéro de compte" onChange={e => {setAccountNumber(e.target.value)}} required></input>
                 </div>

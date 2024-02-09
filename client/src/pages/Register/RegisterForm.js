@@ -7,15 +7,15 @@ const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
-    const registerForm = useRef();
     const navigate = useNavigate();
 
     const register = async (e) => {
         e.preventDefault();
+        const registerForm = e.target;
 
         if (password !== confirmation) {
             alert('Le mot de passe et la confirmation ne sont pas identiques');
-            registerForm.current.reset();
+            registerForm.reset();
             return;
         }
 
@@ -41,7 +41,7 @@ const RegisterForm = () => {
     }
 
     return (
-        <form ref={registerForm} class='col-4 offset-4 col-lg-2 offset-lg-5 text-center' onSubmit={register}>
+        <form class='col-4 offset-4 col-lg-2 offset-lg-5 text-center' onSubmit={register}>
             <div class='form-group mb-2'>
                 <input class='form-control' type='text' placeholder="Nom d'utilisateur" onChange={ e => setUsername(e.target.value) } required></input>
             </div>

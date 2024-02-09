@@ -1,8 +1,16 @@
 import { useEffect } from "react";
 import RegisterForm from "./RegisterForm";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    useEffect( () => {document.title = 'Inscription'}, []);
+    const navigate = useNavigate();
+
+    useEffect( () => {
+        document.title = 'Inscription';
+        if (sessionStorage.getItem('authenticatedUser')) {
+            navigate('/home');
+        }
+    }, []);
 
     return (
         <div>
