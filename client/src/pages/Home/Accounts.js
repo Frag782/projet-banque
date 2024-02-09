@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import TransactionForm from "./TransactionForm";
 
 const Accounts = ({accounts}) => {
