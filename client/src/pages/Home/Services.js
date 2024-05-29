@@ -26,18 +26,18 @@ const Services = () => {
     }
 
     return (
-        <div class='col col-md-6 offset-md-3 my-3'>
-            <h5 class='mb-3'>Mes services</h5>
+        <div className='col col-md-6 offset-md-3 my-3'>
+            <h5 className='mb-3'>Mes services</h5>
             <div>
-            <form ref={accountForm} class='col-6 offset-3 text-center' onSubmit={createAccount}>
-                <div class='form-group mb-2'>
-                    <input name='accountNumber' class='form-control' type='text' placeholder="Numéro de compte" onChange={e => {setAccountNumber(e.target.value)}} required></input>
+            <form ref={accountForm} className='col-6 offset-3 text-center' onSubmit={createAccount}>
+                <div className='form-group mb-2'>
+                    <input name='accountNumber' className='form-control' type='text' placeholder="Numéro de compte" onChange={e => {setAccountNumber(e.target.value)}} required></input>
                 </div>
-                <div class='form-group mb-3'>
-                    <input name='balance' class='form-control' type='number' min='0' placeholder='Solde' onChange={e => {setBalance(e.target.value)}}></input>
+                <div className='form-group mb-3'>
+                    <input name='balance' className='form-control' type='number' min='0' placeholder='Solde' onChange={e => {setBalance(e.target.value)}}></input>
                 </div>
-                <div class='form-group mb-1'>
-                    <button type='submit' class='btn btn-success form-control'>Ouvrir un compte</button>
+                <div className='form-group mb-1'>
+                    <button type='submit' className='btn btn-success form-control'>Ouvrir un compte</button>
                 </div>
             </form>
             </div>

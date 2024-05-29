@@ -1,4 +1,18 @@
 {
-    "port" : 9000,
-    "dbConnection" : "mongodb://localhost:27017/banqueDB"
+    "PORT": 9000,
+    "DATABASE": "mongodb://localhost:27017/banque",
+    "CORS_OPTIONS": {
+        "origin": "http://localhost:3000",
+        "credentials": true
+    },
+    "SESSION_OPTIONS": {
+        "secret": "FGS4Z3xm8zdOUcdN4MyEjVN90oiqthOH",
+        "saveUninitialized": false,
+        "resave": false,
+        "cookie": {
+            "httpOnly": true,
+            "secure": false,
+            "sameSite": "strict"
+        }
+    }
 }

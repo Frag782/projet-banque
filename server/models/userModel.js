@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var userSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     passwordHash: {
         type: String,
@@ -12,7 +12,7 @@ var userSchema = new Schema({
     },
     accounts: {
         type: [{
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Account' 
         }],
         default: []

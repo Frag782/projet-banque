@@ -31,18 +31,18 @@ const TransactionForm = ({ _accountId }) => {
     }
     
     return (
-        <form class='text-center' onSubmit={ makeTransaction }>
-            <div class='form-group'>
-                <select name='transactionType' class='form-select my-1 border-0 border-bottom' required defaultValue={'deposit'} onChange={e => { setTransactionType(e.target.value) }}>
+        <form className='text-center' onSubmit={ makeTransaction }>
+            <div className='form-group'>
+                <select name='transactionType' className='form-select my-1 border-0 border-bottom' required defaultValue={'deposit'} onChange={e => { setTransactionType(e.target.value) }}>
                     <option value={'deposit'}>Dépot</option>
                     <option value={'withdraw'}>Retrait</option>
                 </select>
             </div>
-            <div class='form-group'>
-                <input name='amount' class='form-control my-1 border-0 border-bottom' type="number" min="0" placeholder="Montant" required onChange={e => setAmount(e.target.valueAsNumber)}></input>
+            <div className='form-group'>
+                <input name='amount' className='form-control my-1 border-0 border-bottom' type="number" min="0" placeholder="Montant" required onChange={e => setAmount(e.target.valueAsNumber)}></input>
             </div>
-            <div class='form-group'>
-                <button class='col-4 btn btn-success' type="submit">Effectuer</button>
+            <div className='form-group'>
+                <button className='col-4 btn btn-success' type="submit">Effectuer</button>
             </div>
         </form>
     )
