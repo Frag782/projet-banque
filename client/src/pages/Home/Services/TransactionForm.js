@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const config = require('../../data/config.json');
+const config = require('../../../data/config.json');
 
 const TransactionForm = ({ _accountId }) => {
     const [accountId, setAccountId] = useState(_accountId);

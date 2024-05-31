@@ -9,13 +9,6 @@ var userSchema = new mongoose.Schema({
     passwordHash: {
         type: String,
         required: true
-    },
-    accounts: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Account' 
-        }],
-        default: []
     }
 });
 

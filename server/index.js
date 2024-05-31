@@ -5,7 +5,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 const { CORS_OPTIONS, DATABASE, PORT, SESSION_OPTIONS } = require('./data/config.json');
-const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const accountRoutes = require('./routes/accountRoutes');
 
@@ -18,7 +17,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 /***** ROUTES *****/
-app.use(userRoutes);
 app.use(authRoutes);
 app.use(accountRoutes);
 app.get('/', (req, res) => res.send('API en service.'));

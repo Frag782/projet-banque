@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 var accountSchema = new mongoose.Schema({
     accountNumber: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     balance: {
         type: Number,
         default: 0
+    },
+    owner: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 });
 

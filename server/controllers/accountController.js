@@ -2,67 +2,42 @@ const userModel = require('../models/userModel');
 const accountModel = require ('../models/accountModel');
 const mongoose = require('mongoose');
 
-exports.find_all_accounts = (req, res) => {
-    const accounts = accountModel.find({})
-        .then (accounts => res.status(200).json(accounts))
-        .catch (err => res.status(500).send(err));    
-}
+exports.findAccounts = async (req, res) => {
+    const user = req.session.user;
 
+    if (!user) return res.status(401).send('Utilisateur non authentifié.');
 
-exports.find_user_accounts = async (req, res) => {
-    const username = req.params.username;
-    
-    try{
-        const user = await userModel.findOne({username: username});
-        if (!user) {
-            return res.status(404).json({ message: "L'utilisateur est introuvable.", success: false });
-        }
-
-        const accountsIds = user.accounts;
-        const accounts = await accountModel.find({ _id: { $in: accountsIds } }, 'accountNumber balance');
-        if (!accounts) {
-            return res.status(404).json({ message: "Aucun compte n'a été trouvé.", success: false });
-        }
-
-        return res.status(200).json({ accounts: accounts, success: true });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Le serveur a rencontré une erreur.", success: false});
+    try {
+        const accounts = await accountModel.find({ owner: user._id });
+        res.status(200).send(accounts);
+    }
+    catch(error) {
+        console.log(error);
+        res.status(500).send('Erreur lors de la récupération des comptes.');
     }
 }
 
+exports.createAccount = async (req, res) => {
+    const { accountNumber, balance } = req.body;
+    const user = req.session.user;
 
-exports.create_account = async (req, res) => {
-    const { username, accountNumber, balance } = req.body;
+    if (!user) return res.status(401).send('Utilisateur non authentifié.');
     
-    try {        
-        const [user, existingAccount] = await Promise.all([
-            userModel.findOne({ username: username }),
-            accountModel.findOne({ accountNumber: accountNumber })
-        ]);
-        
-        if (!user) {
-            return res.status(400).json({ message: "L'utilisateur est introuvable." , success: false});
-        }
-        else if (existingAccount) {
-            return res.status(400).json({ message: "Le numéro de compte existe déjà." , success: false});
-        }
+    try {
+        const _user = await userModel.findOne({ username: user.username });
+        if (!_user) return res.status(401).send('L\'utilisateur est introuvable.');
 
-        const createdAccount = await accountModel.create({ accountNumber: accountNumber, balance: balance });
-        if (!createdAccount) {
-            return res.status(400).json({ message: "Échec de la création du compte." , success: false});
-        } 
+        const newAccount = await accountModel.create({ accountNumber: accountNumber, balance: balance, owner: _user._id });
+        if (!newAccount) throw new Error('Échec de la création du compte.');
 
-        const accountSaved = await userModel.updateOne( { _id: user._id }, { $push: { accounts: createdAccount }});
-        if (!accountSaved) {
-            return res.status(400).json({ message: "Échec de la création du compte." , success: false});
-        }
-
-        return res.status(201).json({ message: `Le compte ${accountNumber} a été créé.`  , success: true});
-    } catch (err) {
-        res.status(500).json({ message: "Le serveur a rencontré une erreur.", success: false});
+        res.status(201).send('Votre compte a été créé.');
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send('Erreur lors de la création du compte.');
     }
 }
+
 
 
 exports.make_a_transaction = async (req, res) => {

@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
             })
             .then( (user) => setUser(user) )
             .catch( () => setUser(null) )
-    }, [])
+    }, [user])
 
     const register = (username, password) => {
         fetch(API + '/register', {
